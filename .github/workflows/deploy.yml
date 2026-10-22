@@ -1,0 +1,37 @@
+name: Deploy aldemi.com.ua
+
+# Збирає головну + лендинги + Juno (/juno, /junoclient, /junoadmin) і деплоїть у сайт Firebase «aldemi» (проєкт juno-booking).
+# Секрети репо: FIREBASE_TOKEN (як у Juno), REPOS_TOKEN — fine-grained PAT з Contents: Read на Sash5385/Juno і Sash5385/Juno-client.
+on:
+  push:
+    branches: [main, ccr-0afc4178-9t5dvx]
+  repository_dispatch:
+    types: [juno-updated]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-aldemi
+  cancel-in-progress: true
+
+env:
+  JUNO_REF: ccr-0afc4178-9t5dvx
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with: { repository: Sash5385/Juno, ref: "${{ env.JUNO_REF }}", token: "${{ secrets.REPOS_TOKEN }}", path: _juno }
+      - uses: actions/checkout@v4
+        with: { repository: Sash5385/Juno-client, ref: "${{ env.JUNO_REF }}", token: "${{ secrets.REPOS_TOKEN }}", path: _juno-client }
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - name: Build Juno admin (/junoadmin/)
+        run: cd _juno && npm ci && VITE_BASE=/junoadmin/ npm run build
+      - name: Build Juno client (/junoclient/)
+        run: cd _juno-client && npm ci && VITE_BASE=/junoclient/ npm run build
+      - name: Build site
+        run: JUNO_DIR=$PWD/_juno JUNO_CLIENT_DIR=$PWD/_juno-client JUNO_ADMIN_DIST=$PWD/_juno/dist JUNO_CLIENT_DIST=$PWD/_juno-client/dist bash scripts/build.sh
+      - name: Deploy
+        run: npx firebase-tools deploy --only hosting:aldemi --config firebase.deploy.json --project juno-booking --token "${{ secrets.FIREBASE_TOKEN }}"
