@@ -23,6 +23,10 @@ const uk = {
   'project.visit': 'Відкрити',
   'project.back': '← Усі проєкти',
   'project.order': 'Хочу такий продукт',
+  'stats.langs': 'мови інтерфейсу',
+  'stats.platforms': 'платформи: Web + Android',
+  'stats.products': 'продукти',
+  'hero.badge': 'Відкритий до нових проєктів',
   'demo.title': 'Демо Juno для вашої сфери',
   'demo.lead': 'Повний кабінет майстра з вигаданими клієнтами й записами — нічого не зберігається.',
 };
@@ -51,6 +55,10 @@ const en: Dict = {
   'project.visit': 'Open',
   'project.back': '← All projects',
   'project.order': 'I want a product like this',
+  'stats.langs': 'UI languages',
+  'stats.platforms': 'platforms: Web + Android',
+  'stats.products': 'products',
+  'hero.badge': 'Open to new projects',
   'demo.title': 'Juno demo for your field',
   'demo.lead': 'A full specialist dashboard with fictional clients and bookings — nothing is saved.',
 };
