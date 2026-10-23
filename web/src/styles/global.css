@@ -45,9 +45,13 @@ h1 em { font-style: normal; color: var(--accent); }
 @keyframes spin3 { from { transform: var(--plane) rotateZ(0deg); } to { transform: var(--plane) rotateZ(360deg); } }
 .orbit .sat { position: absolute; top: 50%; left: 50%; width: 0; height: 0; transform-style: preserve-3d;
   transform: rotateZ(var(--a)) translateX(calc(var(--W) * (.5 - var(--k)))) rotateZ(calc(-1 * var(--a))); }
-.orbit .sat > i { position: absolute; left: -27px; top: -27px; display: grid; place-items: center; width: 54px; height: 54px; border-radius: 16px;
-  font-style: normal; font-weight: 800; font-size: 13px; color: #07090d; background: linear-gradient(145deg, color-mix(in srgb, var(--c) 70%, #fff), var(--c));
-  box-shadow: 0 0 30px -4px var(--c), inset 0 -4px 10px rgba(0,0,0,.18); animation: face var(--d) linear infinite; }
+.orbit .sat > i { position: absolute; left: -29px; top: -29px; display: grid; place-items: center; width: 58px; height: 58px; border-radius: 50%;
+  font-style: normal; font-weight: 800; font-size: 13px; color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,.45);
+  background: radial-gradient(circle at 32% 28%, color-mix(in srgb, var(--c) 35%, #fff) 0%, var(--c) 38%, color-mix(in srgb, var(--c) 45%, #000) 100%);
+  box-shadow: 0 0 18px 2px var(--c), 0 0 46px 6px color-mix(in srgb, var(--c) 55%, transparent), inset -6px -8px 14px rgba(0,0,0,.35), inset 4px 4px 10px rgba(255,255,255,.25);
+  animation: face var(--d) linear infinite, glow 3s ease-in-out infinite; }
+.orbit .sat > i::after { content: ""; position: absolute; top: 9px; left: 13px; width: 16px; height: 10px; border-radius: 50%; background: rgba(255,255,255,.55); filter: blur(2px); transform: rotate(-30deg); }
+@keyframes glow { 50% { filter: brightness(1.18) saturate(1.15); } }
 @keyframes face { from { transform: rotateZ(0deg) var(--inv); } to { transform: rotateZ(-360deg) var(--inv); } }
 .orbit .core { position: absolute; inset: 33%; border-radius: 50%; display: grid; place-items: center; transform: translateZ(0);
   background: radial-gradient(circle at 32% 28%, #3a4152 0%, #151922 45%, #07090d 100%);
