@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
-# Збірка: site/ -> dist/ (+ Juno landing та SPA з зовнішніх джерел). Ідемпотентна.
+# Збірка: web/ (Astro) -> dist/ (+ Juno landing та SPA з зовнішніх джерел). Ідемпотентна.
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DIST="$ROOT/dist"
 rm -rf "$DIST"; mkdir -p "$DIST"
-cp -R "$ROOT/site/." "$DIST/"
+(cd "$ROOT/web" && npm ci --no-audit --no-fund && npm run build)
+cp -R "$ROOT/web/dist/." "$DIST/"
 if [ -n "${JUNO_DIR:-}" ] && [ -d "$JUNO_DIR/landing" ]; then
   L="$JUNO_DIR/landing"; mkdir -p "$DIST/juno"
   # <base href="/juno/">: відносні css/js/img лендингу мають братися з /juno/, навіть якщо адреса /juno без слеша

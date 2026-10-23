@@ -1,0 +1,73 @@
+---
+import Base from '../layouts/Base.astro';
+import { ui, services, demoPresets, localePath, type Lang } from '../i18n/ui';
+import { getProjects } from '../lib/projects';
+import { CONTACTS } from '../config';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const tr = ui[lang];
+const projects = await getProjects(lang);
+---
+<Base lang={lang}>
+  <section class="mx-auto max-w-5xl px-4 pb-16 pt-20 sm:pt-28">
+    <h1 class="max-w-3xl text-4xl font-bold leading-tight tracking-tight sm:text-6xl">{tr['hero.title']}</h1>
+    <p class="mt-6 max-w-2xl text-lg text-zinc-400">{tr['hero.sub']}</p>
+    <div class="mt-10 flex flex-wrap gap-3">
+      <a href="#contact" class="rounded-lg bg-emerald-400 px-5 py-3 font-semibold text-zinc-950 hover:bg-emerald-300">{tr['hero.cta']}</a>
+      <a href="#projects" class="rounded-lg border border-zinc-700 px-5 py-3 font-semibold hover:border-emerald-400">{tr['hero.cta2']}</a>
+    </div>
+  </section>
+
+  <section id="projects" class="mx-auto max-w-5xl scroll-mt-20 px-4 py-16">
+    <h2 class="text-2xl font-bold sm:text-3xl">{tr['projects.title']}</h2>
+    <div class="mt-8 grid gap-5 sm:grid-cols-2">
+      {projects.map(({ entry, slug }) => (
+        <a href={localePath(lang, `/projects/${slug}`)} class="group rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6 transition hover:border-emerald-400/60">
+          <div class="flex items-center justify-between gap-3">
+            <h3 class="text-xl font-semibold">{entry.data.title}</h3>
+            <span class="rounded-full bg-zinc-800 px-2.5 py-0.5 text-xs text-zinc-300">{tr[`status.${entry.data.status}`]}</span>
+          </div>
+          <p class="mt-3 text-zinc-400">{entry.data.tagline}</p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            {entry.data.stack.map((s) => <span class="rounded bg-zinc-800/80 px-2 py-0.5 text-xs text-zinc-400">{s}</span>)}
+          </div>
+          <span class="mt-5 inline-block text-sm font-medium text-emerald-400 group-hover:underline">{tr['projects.more']}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section id="demo" class="mx-auto max-w-5xl scroll-mt-20 px-4 py-16">
+    <h2 class="text-2xl font-bold sm:text-3xl">{tr['demo.title']}</h2>
+    <p class="mt-3 max-w-2xl text-zinc-400">{tr['demo.lead']}</p>
+    <div class="mt-6 flex flex-wrap gap-3">
+      {demoPresets[lang].map((d) => (
+        <a href={`/junoadmin/?demo=1&preset=${d.id}`} target="_blank" rel="noopener" class="rounded-lg border border-zinc-700 px-4 py-2 text-sm font-medium hover:border-emerald-400">{d.label}</a>
+      ))}
+    </div>
+  </section>
+
+  <section id="services" class="mx-auto max-w-5xl scroll-mt-20 px-4 py-16">
+    <h2 class="text-2xl font-bold sm:text-3xl">{tr['services.title']}</h2>
+    <div class="mt-8 grid gap-5 sm:grid-cols-3">
+      {services[lang].map((s) => (
+        <div class="rounded-2xl border border-zinc-800 p-6">
+          <h3 class="font-semibold">{s.title}</h3>
+          <p class="mt-2 text-sm text-zinc-400">{s.text}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section id="contact" class="mx-auto max-w-5xl scroll-mt-20 px-4 py-20">
+    <div class="rounded-3xl border border-emerald-400/30 bg-emerald-400/5 p-8 sm:p-12">
+      <h2 class="text-2xl font-bold sm:text-3xl">{tr['contact.title']}</h2>
+      <p class="mt-3 text-zinc-400">{tr['contact.sub']}</p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href={CONTACTS.telegram} target="_blank" rel="noopener" class="rounded-lg bg-emerald-400 px-5 py-3 font-semibold text-zinc-950 hover:bg-emerald-300">Telegram</a>
+        <a href={`mailto:${CONTACTS.email}`} class="rounded-lg border border-zinc-700 px-5 py-3 font-semibold hover:border-emerald-400">{CONTACTS.email}</a>
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,64 @@
+---
+import '../styles/global.css';
+import { ui, localePath, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  title?: string;
+  description?: string;
+  path?: string;
+}
+
+const { lang, title, description, path = '/' } = Astro.props;
+const tr = ui[lang];
+const pageTitle = title ? `${title} — AlDemi` : tr['meta.title'];
+const desc = description ?? tr['meta.desc'];
+const other: Lang = lang === 'uk' ? 'en' : 'uk';
+const site = Astro.site!;
+const ukUrl = new URL(localePath('uk', path), site).href;
+const enUrl = new URL(localePath('en', path), site).href;
+const canonical = lang === 'uk' ? ukUrl : enUrl;
+const home = localePath(lang);
+const year = new Date().getFullYear();
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={desc} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="uk" href={ukUrl} />
+    <link rel="alternate" hreflang="en" href={enUrl} />
+    <link rel="alternate" hreflang="x-default" href={ukUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={desc} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={lang === 'uk' ? 'uk_UA' : 'en_US'} />
+    <meta name="theme-color" content="#09090b" />
+  </head>
+  <body class="min-h-screen bg-zinc-950 text-zinc-100 antialiased">
+    <header class="sticky top-0 z-20 border-b border-zinc-800/80 bg-zinc-950/80 backdrop-blur">
+      <nav class="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
+        <a href={home} class="text-lg font-bold tracking-tight">Al<span class="text-emerald-400">Demi</span></a>
+        <div class="flex items-center gap-4 text-sm text-zinc-300">
+          <a href={`${home}#projects`} class="hidden hover:text-emerald-400 sm:inline">{tr['nav.projects']}</a>
+          <a href={`${home}#services`} class="hidden hover:text-emerald-400 sm:inline">{tr['nav.services']}</a>
+          <a href={`${home}#contact`} class="hover:text-emerald-400">{tr['nav.contact']}</a>
+          <a href={localePath(other, path)} hreflang={other} class="rounded-md border border-zinc-700 px-2 py-1 text-xs font-semibold hover:border-emerald-400">
+            {other === 'uk' ? 'UA' : 'EN'}
+          </a>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="border-t border-zinc-800 py-8 text-center text-sm text-zinc-500">
+      © {year} AlDemi
+    </footer>
+  </body>
+</html>

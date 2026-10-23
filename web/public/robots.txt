@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://aldemi.com.ua/sitemap-index.xml
