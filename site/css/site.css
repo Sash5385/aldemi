@@ -65,3 +65,5 @@ footer{border-top:1px solid var(--line);padding-block:24px;color:var(--faint);fo
 .feats li{padding:14px 18px;color:var(--dim)}
 .feats li::before{content:"✓ ";color:var(--g);font-weight:800}
 .todo{outline:1px dashed rgba(251,191,36,.5);outline-offset:2px}
+
+.preset-btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
