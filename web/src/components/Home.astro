@@ -11,15 +11,16 @@ const { lang } = Astro.props;
 const tr = ui[lang];
 const projects = await getProjects(lang);
 
+const planes = [
+  { plane: 'rotateX(72deg)', inv: 'rotateX(-72deg)', inset: '2%', k: '.02', d: '24s' },
+  { plane: 'rotateX(72deg) rotateY(32deg)', inv: 'rotateY(-32deg) rotateX(-72deg)', inset: '12%', k: '.12', d: '18s' },
+  { plane: 'rotateX(72deg) rotateY(-32deg)', inv: 'rotateY(32deg) rotateX(-72deg)', inset: '12%', k: '.12', d: '30s' },
+];
 const sats = [
   { label: 'FD', c: accentOf('finddrive'), a: '0deg', ring: 0 },
-  { label: 'DP', c: accentOf('drivepad'), a: '180deg', ring: 0 },
-  { label: 'JU', c: accentOf('juno'), a: '60deg', ring: 1 },
-  { label: 'MG', c: accentOf('magentic'), a: '240deg', ring: 1 },
-];
-const rings = [
-  { inset: '22%', r: 'calc(min(340px, 80vw) * .28)', d: '26s' },
-  { inset: '8%', r: 'calc(min(340px, 80vw) * .42)', d: '40s' },
+  { label: 'JU', c: accentOf('juno'), a: '180deg', ring: 0 },
+  { label: 'DP', c: accentOf('drivepad'), a: '90deg', ring: 1 },
+  { label: 'MG', c: accentOf('magentic'), a: '270deg', ring: 2 },
 ];
 const stack = ['React', 'TypeScript', 'Astro', 'Vite', 'Tailwind', 'Firebase', 'Realtime DB', 'FCM', 'Kotlin', 'Jetpack Compose', 'Node.js', 'GitHub Actions'];
 const serviceIcons = [
@@ -49,16 +50,18 @@ const serviceIcons = [
       </div>
     </div>
 
-    <div class="reveal" style="--delay:250ms">
+    <div>
       <div class="orbit">
-        {rings.map((ring, i) => (
-          <div class="ring" style={`--inset:${ring.inset};--d:${ring.d}`}>
-            {sats.filter((s) => s.ring === i).map((s) => (
-              <span class="sat" style={`--a:${s.a};--r:${ring.r};--c:${s.c};--d:${ring.d}`}><i>{s.label}</i></span>
-            ))}
-          </div>
-        ))}
-        <div class="core"><span>A<span class="text-emerald-400">.</span></span></div>
+        <div class="scene">
+          {planes.map((p, i) => (
+            <div class="ring" style={`--plane:${p.plane};--inv:${p.inv};--inset:${p.inset};--k:${p.k};--d:${p.d}`}>
+              {sats.filter((s) => s.ring === i).map((s) => (
+                <span class="sat" style={`--a:${s.a};--c:${s.c}`}><i>{s.label}</i></span>
+              ))}
+            </div>
+          ))}
+          <div class="core"><span>A<span class="text-emerald-400">.</span></span></div>
+        </div>
       </div>
     </div>
   </section>
