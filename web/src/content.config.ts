@@ -10,6 +10,7 @@ const projects = defineCollection({
     status: z.enum(['live', 'beta', 'dev']),
     stack: z.array(z.string()),
     url: z.string().optional(),
+    demo: z.string().optional(),
     order: z.number(),
   }),
 });

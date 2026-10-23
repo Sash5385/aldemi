@@ -86,7 +86,7 @@ const serviceIcons = [
       {projects.map(({ entry, slug }, i) => {
         const c = accentOf(slug);
         return (
-          <a href={localePath(lang, `/projects/${slug}`)} class="spot reveal group glass overflow-hidden rounded-[18px] transition duration-300 hover:-translate-y-1 hover:border-white/30" style={`--c:${c};--delay:${(i % 2) * 120}ms`}>
+          <div class="spot reveal group relative glass overflow-hidden rounded-[18px] transition duration-300 hover:-translate-y-1 hover:border-white/30" style={`--c:${c};--delay:${(i % 2) * 120}ms`}>
             <div class="relative h-44 border-b border-white/5" style={`background:radial-gradient(120% 90% at 50% 0%, ${c}26, transparent 70%)`}>
               <ProjectArt slug={slug} color={c} class="absolute inset-0 m-auto h-full w-full p-4 transition duration-500 group-hover:scale-105" />
             </div>
@@ -99,9 +99,14 @@ const serviceIcons = [
               <div class="mt-4 flex flex-wrap gap-2">
                 {entry.data.stack.map((s) => <span class="rounded-md bg-white/5 px-2 py-0.5 text-xs text-zinc-400">{s}</span>)}
               </div>
-              <span class="mt-5 inline-flex items-center gap-1 text-sm font-semibold transition-all group-hover:gap-2" style={`color:${c}`}>{tr['projects.more']}</span>
+              <div class="mt-5 flex flex-wrap items-center gap-3">
+                <a href={localePath(lang, `/projects/${slug}`)} class="inline-flex items-center gap-1 text-sm font-semibold transition-all after:absolute after:inset-0 after:content-[''] hover:gap-2" style={`color:${c}`}>{tr['projects.more']}</a>
+                {entry.data.demo && (
+                  <a href={entry.data.demo} target="_blank" rel="noopener" class="relative z-10 ml-auto rounded-xl px-4 py-2 text-sm font-extrabold text-zinc-950 shadow-[0_0_24px_-4px_var(--c)] transition hover:-translate-y-0.5 hover:brightness-110" style={`background:${c}`}>{tr['project.demo']}</a>
+                )}
+              </div>
             </div>
-          </a>
+          </div>
         );
       })}
     </div>

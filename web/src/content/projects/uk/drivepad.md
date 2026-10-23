@@ -3,6 +3,7 @@ title: DrivePad
 tagline: CRM і онлайн-запис для інструкторів з водіння та автошкіл.
 status: dev
 stack: [React, TypeScript, Firebase, Kotlin]
+demo: https://admin.drivepad.com.ua/?demo=1
 order: 2
 ---
 ## Про проєкт

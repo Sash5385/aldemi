@@ -37,6 +37,9 @@ const c = accentOf(slug);
     </div>
 
     <div class="mt-12 flex flex-wrap gap-3">
+      {entry.data.demo && (
+        <a href={entry.data.demo} target="_blank" rel="noopener" class="rounded-lg px-5 py-3 font-extrabold text-zinc-950 shadow-[0_0_24px_-4px_currentColor] transition hover:-translate-y-0.5" style={`background:${c};color:#07090d`}>{tr['project.demo']}</a>
+      )}
       {entry.data.url && (
         <a href={entry.data.url} target="_blank" rel="noopener" class="rounded-lg border border-zinc-700 px-5 py-3 font-semibold hover:border-emerald-400">{tr['project.visit']} ↗</a>
       )}
