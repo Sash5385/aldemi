@@ -32,17 +32,20 @@ const serviceIcons = [
   <!-- HERO -->
   <section class="mx-auto grid max-w-6xl items-center gap-12 px-4 pb-16 pt-14 sm:pt-24 lg:grid-cols-[1.1fr_.9fr]">
     <div>
-      <span class="reveal inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-xs font-medium text-emerald-300">
-        <span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-emerald-400"></span></span>
-        {tr['hero.badge']}
-      </span>
-      <h1 class="reveal mt-6 text-4xl font-extrabold leading-[1.08] tracking-tight sm:text-6xl" style="--delay:100ms">
-        <span class="gtext">{tr['hero.title']}</span>
+      <span class="eyebrow reveal">{tr['hero.eyebrow']}</span>
+      <h1 class="reveal mt-3 text-[clamp(34px,6vw,56px)] font-extrabold leading-[1.05] tracking-[-1.2px]" style="--delay:90ms">
+        {tr['hero.t1']}<em>{tr['hero.em']}</em>{tr['hero.t2']}
       </h1>
-      <p class="reveal mt-6 max-w-xl text-lg text-zinc-400" style="--delay:200ms">{tr['hero.sub']}</p>
-      <div class="reveal mt-10 flex flex-wrap gap-3" style="--delay:300ms">
-        <a href="#contact" class="rounded-xl bg-emerald-400 px-6 py-3 font-semibold text-zinc-950 shadow-[0_0_40px_-8px_#34d399] transition hover:-translate-y-0.5 hover:bg-emerald-300">{tr['hero.cta']}</a>
-        <a href="#projects" class="rounded-xl border border-white/15 bg-white/5 px-6 py-3 font-semibold backdrop-blur transition hover:-translate-y-0.5 hover:border-white/30">{tr['hero.cta2']}</a>
+      <p class="lead reveal mt-5 max-w-xl text-[19px] text-[#c9cbd1]" style="--delay:180ms">{tr['hero.sub']}</p>
+      <div class="reveal mt-7 flex flex-wrap gap-3" style="--delay:270ms">
+        <a href="#contact" class="btn-primary rounded-[14px] px-6 py-3.5 font-extrabold transition hover:-translate-y-px hover:brightness-110">{tr['hero.cta']}</a>
+        <a href="#projects" class="rounded-[14px] border border-white/10 bg-white/5 px-6 py-3.5 font-extrabold transition hover:-translate-y-px hover:brightness-110">{tr['hero.cta2']}</a>
+      </div>
+      <p class="reveal mt-4 text-[13px] text-[#bdbfc6]" style="--delay:360ms">{tr['hero.note']}</p>
+      <div class="reveal mt-5 flex flex-wrap gap-2" style="--delay:450ms">
+        <span class="chip">🟢 {tr['hero.badge']}</span>
+        <span class="chip">Web · Android</span>
+        <span class="chip">Firebase</span>
       </div>
     </div>
 
@@ -59,13 +62,14 @@ const serviceIcons = [
       </div>
     </div>
   </section>
+  <div class="scrollcue -mt-6 mb-10 lg:hidden"><i></i><span>{tr['hero.scroll']}</span></div>
 
   <!-- STATS -->
   <section class="mx-auto max-w-6xl px-4">
-    <div class="grid grid-cols-3 gap-3 rounded-2xl border border-white/10 bg-white/[.03] p-4 backdrop-blur sm:p-6">
+    <div class="grid grid-cols-3 gap-3 rounded-2xl glass p-4 sm:p-6">
       {[['4', tr['stats.products']], ['2', tr['stats.platforms']], ['2', tr['stats.langs']]].map(([n, l], i) => (
         <div class="reveal text-center" style={`--delay:${i * 100}ms`}>
-          <div class="gtext text-3xl font-extrabold sm:text-4xl">{n}</div>
+          <div class="text-3xl font-extrabold text-[var(--accent)] sm:text-4xl">{n}</div>
           <div class="mt-1 text-xs text-zinc-400 sm:text-sm">{l}</div>
         </div>
       ))}
@@ -74,12 +78,12 @@ const serviceIcons = [
 
   <!-- PROJECTS -->
   <section id="projects" class="mx-auto max-w-6xl scroll-mt-20 px-4 py-20">
-    <h2 class="reveal text-3xl font-extrabold tracking-tight sm:text-4xl">{tr['projects.title']}</h2>
+    <h2 class="sec-title reveal text-[clamp(26px,4.5vw,38px)] font-extrabold leading-tight tracking-[-.5px]">{tr['projects.title']}</h2>
     <div class="mt-10 grid gap-5 sm:grid-cols-2">
       {projects.map(({ entry, slug }, i) => {
         const c = accentOf(slug);
         return (
-          <a href={localePath(lang, `/projects/${slug}`)} class="spot reveal group overflow-hidden rounded-3xl border border-white/10 bg-white/[.03] backdrop-blur transition duration-300 hover:-translate-y-1 hover:border-white/25" style={`--c:${c};--delay:${(i % 2) * 120}ms`}>
+          <a href={localePath(lang, `/projects/${slug}`)} class="spot reveal group glass overflow-hidden rounded-[18px] transition duration-300 hover:-translate-y-1 hover:border-white/30" style={`--c:${c};--delay:${(i % 2) * 120}ms`}>
             <div class="relative h-44 border-b border-white/5" style={`background:radial-gradient(120% 90% at 50% 0%, ${c}26, transparent 70%)`}>
               <ProjectArt slug={slug} color={c} class="absolute inset-0 m-auto h-full w-full p-4 transition duration-500 group-hover:scale-105" />
             </div>
@@ -105,7 +109,7 @@ const serviceIcons = [
     <div class="marquee">
       <div>
         {[...stack, ...stack].map((s) => (
-          <span class="whitespace-nowrap rounded-full border border-white/10 bg-white/[.03] px-4 py-2 text-sm text-zinc-300">{s}</span>
+          <span class="whitespace-nowrap chip">{s}</span>
         ))}
       </div>
     </div>
@@ -131,10 +135,10 @@ const serviceIcons = [
 
   <!-- SERVICES -->
   <section id="services" class="mx-auto max-w-6xl scroll-mt-20 px-4 py-20">
-    <h2 class="reveal text-3xl font-extrabold tracking-tight sm:text-4xl">{tr['services.title']}</h2>
+    <h2 class="sec-title reveal text-[clamp(26px,4.5vw,38px)] font-extrabold leading-tight tracking-[-.5px]">{tr['services.title']}</h2>
     <div class="mt-10 grid gap-5 sm:grid-cols-3">
       {services[lang].map((s, i) => (
-        <div class="spot reveal rounded-3xl border border-white/10 bg-white/[.03] p-6 backdrop-blur transition hover:-translate-y-1 hover:border-white/25" style={`--delay:${i * 120}ms`}>
+        <div class="spot reveal glass rounded-[18px] p-6 transition hover:-translate-y-1 hover:border-white/30" style={`--delay:${i * 120}ms`}>
           <div class="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-emerald-400/25 to-indigo-400/25 text-emerald-300">
             <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={serviceIcons[i]} />
           </div>
@@ -149,10 +153,10 @@ const serviceIcons = [
   <section id="contact" class="mx-auto max-w-6xl scroll-mt-20 px-4 pb-24 pt-8">
     <div class="reveal relative overflow-hidden rounded-[2rem] p-[1px]" style="background:linear-gradient(120deg,#34d399,#60a5fa,#f472b6,#a78bfa)">
       <div class="relative rounded-[calc(2rem-1px)] bg-[#0a0d13]/95 p-8 text-center sm:p-14">
-        <h2 class="text-3xl font-extrabold tracking-tight sm:text-5xl"><span class="gtext">{tr['contact.title']}</span></h2>
+        <h2 class="text-3xl font-extrabold tracking-tight sm:text-5xl">{tr['contact.title']}</h2>
         <p class="mt-4 text-zinc-400">{tr['contact.sub']}</p>
         <div class="mt-10 flex flex-wrap justify-center gap-3">
-          <a href={CONTACTS.telegram} target="_blank" rel="noopener" class="rounded-xl bg-emerald-400 px-6 py-3 font-semibold text-zinc-950 shadow-[0_0_40px_-8px_#34d399] transition hover:-translate-y-0.5 hover:bg-emerald-300">Telegram</a>
+          <a href={CONTACTS.telegram} target="_blank" rel="noopener" class="btn-primary rounded-[14px] px-6 py-3.5 font-extrabold transition hover:-translate-y-px hover:brightness-110">Telegram</a>
           <a href={`mailto:${CONTACTS.email}`} class="rounded-xl border border-white/15 bg-white/5 px-6 py-3 font-semibold transition hover:-translate-y-0.5 hover:border-white/30">{CONTACTS.email}</a>
         </div>
       </div>

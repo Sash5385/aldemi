@@ -14,24 +14,26 @@
 html { scroll-behavior: smooth; background: #07090d; color-scheme: dark; }
 html, body { overflow-x: clip; }
 
-/* ---------- Фон: аврора + сітка ---------- */
-.aurora { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; background: #07090d; }
-.aurora::after { content: ""; position: absolute; inset: 0;
-  background-image: linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
-  background-size: 48px 48px;
-  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 75%); }
-.blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: .45; will-change: transform; }
-.blob.b1 { width: 520px; height: 520px; background: #10b981; top: -180px; left: -120px; animation: drift1 22s ease-in-out infinite alternate; }
-.blob.b2 { width: 460px; height: 460px; background: #6366f1; top: 10%; right: -160px; animation: drift2 26s ease-in-out infinite alternate; }
-.blob.b3 { width: 380px; height: 380px; background: #ec4899; top: 55%; left: 30%; opacity: .22; animation: drift3 30s ease-in-out infinite alternate; }
-@keyframes drift1 { to { transform: translate(140px, 120px) scale(1.15); } }
-@keyframes drift2 { to { transform: translate(-160px, 180px) scale(.9); } }
-@keyframes drift3 { to { transform: translate(-120px, -160px) scale(1.2); } }
-
-/* ---------- Текст із градієнтом ---------- */
-.gtext { background: linear-gradient(90deg, #34d399, #60a5fa, #f472b6, #a78bfa, #34d399); background-size: 300% 100%;
-  -webkit-background-clip: text; background-clip: text; color: transparent; animation: gshift 8s linear infinite; }
-@keyframes gshift { to { background-position: 300% 0; } }
+/* ---------- Фон: орби з паралаксом (як DrivePad) ---------- */
+:root { --accent: #34d399; --acc-hi: #6ee7b7; }
+html { background: #0a0b0d; }
+.bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; background: #0a0b0d; filter: hue-rotate(calc(var(--p, 0) * 150deg)); }
+.bg::after { content: ""; position: absolute; inset: 0; background: rgba(8,9,11,.42); }
+.orb { position: absolute; border-radius: 50%; filter: blur(40px); opacity: .4; }
+.orb.o1 { width: 46vw; height: 46vw; min-width: 260px; min-height: 260px; left: -8vw; top: 6vh; background: #34d399; transform: translateY(calc(var(--syn, 0) * -.18px)); }
+.orb.o2 { width: 38vw; height: 38vw; min-width: 220px; min-height: 220px; right: -6vw; top: 46vh; background: #7a4dff; transform: translateY(calc(var(--syn, 0) * -.3px)); }
+.orb.o3 { width: 34vw; height: 34vw; min-width: 200px; min-height: 200px; left: 30vw; top: 96vh; background: #f472b6; transform: translateY(calc(var(--syn, 0) * -.12px)); }
+#fxbar { position: fixed; top: 0; left: 0; height: 3px; width: calc(var(--p, 0) * 100%); background: linear-gradient(90deg, #34d399, #60a5fa, #f472b6); z-index: 80; }
+h1, .sec-title, .lead { text-shadow: 0 2px 20px rgba(0,0,0,.5); }
+.eyebrow { display: inline-block; font-size: 12px; font-weight: 800; letter-spacing: 1.6px; text-transform: uppercase; color: var(--acc-hi); }
+h1 em { font-style: normal; color: var(--accent); }
+.glass { background: rgba(18,19,23,.74); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border: 1px solid rgba(255,255,255,.16); }
+.btn-primary { background: linear-gradient(135deg, #10b981, #059669); color: #fff; box-shadow: 0 8px 22px rgba(52,211,153,.35); }
+.chip { font-size: 13px; font-weight: 700; padding: 7px 12px; border-radius: 999px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); color: #d4d6dc; }
+.scrollcue { display: flex; flex-direction: column; align-items: center; gap: 6px; margin-top: 34px; color: #bdbfc6; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; }
+.scrollcue i { width: 24px; height: 38px; border: 2px solid rgba(255,255,255,.35); border-radius: 14px; position: relative; }
+.scrollcue i::after { content: ""; position: absolute; left: 50%; top: 7px; width: 4px; height: 8px; margin-left: -2px; border-radius: 2px; background: var(--accent); animation: cue 1.6s infinite; }
+@keyframes cue { 0% { opacity: 0; transform: translateY(0); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateY(14px); } }
 
 /* ---------- Орбіта проєктів ---------- */
 .orbit { position: relative; width: min(340px, 80vw); aspect-ratio: 1; margin-inline: auto; }
@@ -53,8 +55,8 @@ html, body { overflow-x: clip; }
 .spot:hover::before { opacity: 1; }
 
 /* ---------- Поява при скролі ---------- */
-html.js .reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); transition-delay: var(--delay, 0ms); }
-html.js .reveal.in { opacity: 1; transform: none; }
+html.js .reveal { opacity: 0; transform: translateY(16px); filter: blur(10px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1), filter .8s ease; transition-delay: var(--delay, 0ms); will-change: transform, opacity; }
+html.js .reveal.in { opacity: 1; transform: none; filter: none; }
 
 /* ---------- Бігучий рядок ---------- */
 .marquee { mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); overflow: hidden; }
@@ -79,5 +81,5 @@ html.js .reveal.in { opacity: 1; transform: none; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
-  html.js .reveal { opacity: 1; transform: none; }
+  html.js .reveal { opacity: 1; transform: none; filter: none; }
 }

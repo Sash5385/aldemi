@@ -38,13 +38,14 @@ const year = new Date().getFullYear();
     <meta property="og:description" content={desc} />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content={lang === 'uk' ? 'uk_UA' : 'en_US'} />
-    <meta name="theme-color" content="#07090d" />
+    <meta name="theme-color" content="#0a0b0d" />
     <link rel="preload" href="/fonts/onest-cyrillic-800-normal.woff2" as="font" type="font/woff2" crossorigin />
     <script is:inline>document.documentElement.classList.add("js")</script>
   </head>
   <body class="min-h-screen text-zinc-100 antialiased">
-    <div class="aurora" aria-hidden="true"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
-    <header class="sticky top-0 z-20 border-b border-zinc-800/80 bg-[#07090d]/60 backdrop-blur-xl">
+    <div class="bg" aria-hidden="true"><i class="orb o1"></i><i class="orb o2"></i><i class="orb o3"></i></div>
+    <div id="fxbar" aria-hidden="true"></div>
+    <header class="sticky top-0 z-20 border-b border-zinc-800/80 bg-[#0a0b0d]/80 backdrop-blur-md">
       <nav class="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
         <a href={home} class="text-lg font-bold tracking-tight">Al<span class="text-emerald-400">Demi</span></a>
         <div class="flex items-center gap-4 text-sm text-zinc-300">
@@ -64,9 +65,18 @@ const year = new Date().getFullYear();
       © {year} AlDemi
     </footer>
     <script>
+      const root = document.documentElement;
+      let tick = false;
+      const upd = () => {
+        const sy = window.scrollY || 0, max = Math.max(1, root.scrollHeight - innerHeight);
+        root.style.setProperty('--p', Math.min(1, sy / max).toFixed(4));
+        root.style.setProperty('--syn', sy.toFixed(0));
+      };
+      addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(() => { upd(); tick = false; }); } }, { passive: true });
+      addEventListener('resize', upd); upd();
       const io = new IntersectionObserver((es) => es.forEach((e) => {
         if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-      }), { threshold: 0.12 });
+      }), { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
       document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
       document.querySelectorAll<HTMLElement>('.spot').forEach((el) => el.addEventListener('pointermove', (ev) => {
         const r = el.getBoundingClientRect();
