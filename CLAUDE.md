@@ -8,3 +8,4 @@
 - Не змінювати візуальний стиль без запиту; мінімальні зміни.
 - Економія токенів: читати файли через offset/limit, Grep перед Read; не читати dist/ і шрифти.
 - Не комітити/пушити без прямого запиту власника.
+- `/magentic-demo/` — збірка Magentic у демо-режимі (`web/public/magentic-demo`). Оновити: у `Sash5385/Magentic/notes-ai/web` → `npx vite build --mode demo --base /magentic-demo/ --outDir <aldemi>/web/public/magentic-demo`.
