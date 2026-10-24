@@ -38,12 +38,12 @@ const c = accentOf(slug);
 
     <div class="mt-12 flex flex-wrap gap-3">
       {entry.data.demo && (
-        <a href={entry.data.demo} target="_blank" rel="noopener" class="n-press rounded-full px-5 py-3 font-extrabold text-zinc-950 shadow-[0_0_24px_-4px_currentColor] transition hover:-translate-y-0.5" style={`background:${c};color:#07090d`}>{tr['project.demo']}</a>
+        <a href={entry.data.demo} target="_blank" rel="noopener" class="n-press inline-flex min-h-[96px] items-center justify-center rounded-full px-7 font-extrabold text-zinc-950 shadow-[0_0_24px_-4px_currentColor] transition hover:-translate-y-0.5" style={`background:${c};color:#07090d`}>{tr['project.demo']}</a>
       )}
       {entry.data.url && (
-        <a href={entry.data.url} target="_blank" rel="noopener" class="n-out-s n-press rounded-full px-5 py-3 font-extrabold">{tr['project.visit']} ↗</a>
+        <a href={entry.data.url} target="_blank" rel="noopener" class="n-out-s n-press inline-flex min-h-[96px] items-center justify-center rounded-full px-7 font-extrabold">{tr['project.visit']} ↗</a>
       )}
-      <a href={`${localePath(lang)}#contact`} class="n-press rounded-full px-5 py-3 font-semibold text-zinc-950 transition hover:-translate-y-0.5" style={`background:${c}`}>{tr['project.order']}</a>
+      <a href={`${localePath(lang)}#contact`} class="n-press inline-flex min-h-[96px] items-center justify-center rounded-full px-7 font-semibold text-zinc-950 transition hover:-translate-y-0.5" style={`background:${c}`}>{tr['project.order']}</a>
     </div>
   </article>
 </Base>
