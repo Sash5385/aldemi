@@ -48,7 +48,8 @@ const year = new Date().getFullYear();
           if (q === "0") sessionStorage.removeItem("fx");
           else if (q) sessionStorage.setItem("fx", q);
           var f = sessionStorage.getItem("fx");
-          if (f) document.documentElement.setAttribute("data-fx", f);
+          document.documentElement.setAttribute("data-fx", f || "23");
+          if (f) document.documentElement.setAttribute("data-fx-preview", "1");
         } catch (e) {}
       })();
     </script>
@@ -86,7 +87,7 @@ const year = new Date().getFullYear();
       }), { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
       document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
       const fx = Number(root.dataset.fx || 0);
-      if (fx) {
+      if (fx && root.dataset.fxPreview) {
         const names = ['', 'Підйом', 'Повільна поява', 'Зліва', 'Зліва / справа', 'Наближення', 'Віддалення', '3D-фліп вгору', '3D-поворот картки', 'Підйом з нахилом', 'Видавлювання (неоморф)', 'З розмиття', 'Шторка знизу', 'Коло', 'Пружина', 'Падіння зверху', 'Розгойдування', 'Скіс', 'Прив’язка до скролу', 'Паралакс секцій', '3D-нахил + стиснення hero', '3D-падіння згори', 'З глибини', 'Поп', 'Розгортання вбік', 'Розгортання вниз', 'Переворот 180°', 'Глітч', 'Шторка зліва', 'Діагональ', 'Спалах', 'Пружина справа', 'З ч/б у колір', 'З кута', 'Сплющення', 'Сходинки', 'Вдавлене → випукле', 'Виїзд при скролі', '3D-карусель', 'Фокус у центрі', 'Стопка карток'];
         const go = (n: number) => `${location.pathname}?fx=${((n + 39) % 40) + 1}`;
         const bar = document.createElement('div');
