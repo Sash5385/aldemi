@@ -10,6 +10,7 @@ interface Props { lang: Lang }
 const { lang } = Astro.props;
 const tr = ui[lang];
 const projects = await getProjects(lang);
+const ABBR: Record<string, string> = { finddrive: 'FD', drivepad: 'DP', juno: 'JU', magentic: 'MG' };
 
 const planes = [
   { plane: 'rotateX(72deg)', inv: 'rotateX(-72deg)', inset: '2%', k: '.02', d: '24s' },
@@ -31,78 +32,73 @@ const serviceIcons = [
 ---
 <Base lang={lang}>
   <!-- HERO -->
-  <section class="mx-auto grid max-w-6xl items-center gap-12 px-4 pb-16 pt-14 sm:pt-24 lg:grid-cols-[1.1fr_.9fr]">
-    <div>
-      <span class="eyebrow reveal">{tr['hero.eyebrow']}</span>
-      <h1 class="reveal mt-3 text-[clamp(34px,6vw,56px)] font-extrabold leading-[1.05] tracking-[-1.2px]" style="--delay:90ms">
-        {tr['hero.t1']}<em>{tr['hero.em']}</em>{tr['hero.t2']}
+  <section class="mx-auto max-w-5xl px-4 pt-6">
+    <div class="n-out reveal relative overflow-hidden rounded-[28px] p-6 sm:p-10">
+      <div class="n-in pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full sm:h-80 sm:w-80" aria-hidden="true"></div>
+      <span class="n-lbl relative">{tr['hero.eyebrow']}</span>
+      <h1 class="relative mt-3 max-w-2xl text-[clamp(30px,6vw,52px)] font-extrabold leading-[1.08] tracking-[-1px]">
+        {tr['hero.t1']}<em class="not-italic text-[var(--accent)]">{tr['hero.em']}</em>{tr['hero.t2']}
       </h1>
-      <p class="lead reveal mt-5 max-w-xl text-[19px] text-[#c9cbd1]" style="--delay:180ms">{tr['hero.sub']}</p>
-      <div class="reveal mt-7 flex flex-wrap gap-3" style="--delay:270ms">
-        <a href="#contact" class="btn-primary rounded-[14px] px-6 py-3.5 font-extrabold transition hover:-translate-y-px hover:brightness-110">{tr['hero.cta']}</a>
-        <a href="#projects" class="rounded-[14px] border border-white/10 bg-white/5 px-6 py-3.5 font-extrabold transition hover:-translate-y-px hover:brightness-110">{tr['hero.cta2']}</a>
-      </div>
-      <p class="reveal mt-4 text-[13px] text-[#bdbfc6]" style="--delay:360ms">{tr['hero.note']}</p>
-      <div class="reveal mt-5 flex flex-wrap gap-2" style="--delay:450ms">
-        <span class="chip">🟢 {tr['hero.badge']}</span>
-        <span class="chip">Web · Android</span>
-        <span class="chip">Firebase</span>
-      </div>
-    </div>
-
-    <div>
-      <div class="orbit">
-        <div class="scene">
-          {planes.map((p, i) => (
-            <div class="ring" style={`--plane:${p.plane};--inv:${p.inv};--inset:${p.inset};--k:${p.k};--d:${p.d}`}>
-              {sats.filter((s) => s.ring === i).map((s) => (
-                <span class="sat" style={`--a:${s.a};--c:${s.c}`}><i>{s.label}</i></span>
-              ))}
-            </div>
-          ))}
-          <div class="core"><span>A<span class="text-emerald-400">.</span></span></div>
-        </div>
+      <p class="relative mt-4 max-w-xl text-[var(--nm)]">{tr['hero.sub']}</p>
+      <div class="relative mt-7 flex items-center gap-4">
+        <a href="#contact" class="n-grad n-press grid h-16 w-16 place-items-center rounded-full text-2xl" aria-label={tr['hero.write']}>✉</a>
+        <a href="#contact" class="font-extrabold">{tr['hero.write']}</a>
+        <a href="#projects" class="n-out-s n-press ml-auto grid h-12 w-12 place-items-center rounded-full text-lg" aria-label={tr['hero.cta2']}>→</a>
       </div>
     </div>
   </section>
-  <div class="scrollcue -mt-6 mb-10 lg:hidden"><i></i><span>{tr['hero.scroll']}</span></div>
+
+  <!-- APP TILES -->
+  <section class="mx-auto max-w-5xl px-4 pt-8">
+    <div class="grid grid-cols-4 gap-3 sm:gap-6">
+      {projects.map(({ entry, slug }, i) => {
+        const c = accentOf(slug);
+        return (
+          <a href={localePath(lang, `/projects/${slug}`)} class="reveal text-center" style={`--delay:${i * 80}ms`}>
+            <span class="n-out-s n-tile mx-auto grid aspect-square w-full max-w-[84px] place-items-center rounded-[22px] text-sm font-extrabold" style={`color:${c}`}>{ABBR[slug] ?? entry.data.title.slice(0, 2).toUpperCase()}</span>
+            <span class="mt-2 block truncate text-xs text-[var(--nm)]">{entry.data.title}</span>
+          </a>
+        );
+      })}
+    </div>
+  </section>
 
   <!-- STATS -->
-  <section class="mx-auto max-w-6xl px-4">
-    <div class="grid grid-cols-3 gap-3 rounded-2xl glass p-4 sm:p-6">
-      {[['4', tr['stats.products']], ['2', tr['stats.platforms']], ['2', tr['stats.langs']]].map(([n, l], i) => (
-        <div class="reveal text-center" style={`--delay:${i * 100}ms`}>
-          <div class="text-3xl font-extrabold text-[var(--accent)] sm:text-4xl">{n}</div>
-          <div class="mt-1 text-xs text-zinc-400 sm:text-sm">{l}</div>
+  <section class="mx-auto max-w-5xl px-4 pt-8">
+    <div class="grid grid-cols-3 gap-3 sm:gap-6">
+      {[['4', tr['stats.products']], ['2', tr['stats.platforms'].split(':')[0]], ['2', tr['stats.uptime']]].map(([n, l], i) => (
+        <div class="n-in reveal rounded-[20px] py-4 text-center" style={`--delay:${i * 80}ms`}>
+          <div class="text-2xl font-extrabold text-[var(--accent)]">{n}</div>
+          <div class="mt-1 text-xs text-[var(--nm)]">{l}</div>
         </div>
       ))}
     </div>
   </section>
 
   <!-- PROJECTS -->
-  <section id="projects" class="mx-auto max-w-6xl scroll-mt-20 px-4 py-20">
-    <h2 class="sec-title reveal text-[clamp(26px,4.5vw,38px)] font-extrabold leading-tight tracking-[-.5px]">{tr['projects.title']}</h2>
-    <div class="mt-10 grid gap-5 sm:grid-cols-2">
+  <section id="projects" class="mx-auto max-w-5xl scroll-mt-20 px-4 py-16">
+    <h2 class="reveal text-[clamp(26px,4.5vw,36px)] font-extrabold tracking-[-.5px]">{tr['projects.title']}</h2>
+    <div class="mt-8 grid gap-6 sm:grid-cols-2">
       {projects.map(({ entry, slug }, i) => {
         const c = accentOf(slug);
         return (
-          <div class="spot reveal group relative glass overflow-hidden rounded-[18px] transition duration-300 hover:-translate-y-1 hover:border-white/30" style={`--c:${c};--delay:${(i % 2) * 120}ms`}>
-            <div class="relative h-44 border-b border-white/5" style={`background:radial-gradient(120% 90% at 50% 0%, ${c}26, transparent 70%)`}>
-              <ProjectArt slug={slug} color={c} class="absolute inset-0 m-auto h-full w-full p-4 transition duration-500 group-hover:scale-105" />
+          <div class="n-out reveal relative overflow-hidden rounded-[24px]" style={`--delay:${(i % 2) * 100}ms`}>
+            <div class="n-in m-4 rounded-[18px]">
+              <ProjectArt slug={slug} color={c} class="mx-auto h-40 w-full p-4" />
             </div>
-            <div class="p-6">
+            <div class="px-6 pb-6">
               <div class="flex items-center justify-between gap-3">
-                <h3 class="text-xl font-bold">{entry.data.title}</h3>
-                <span class="rounded-full px-2.5 py-0.5 text-xs font-medium" style={`background:${c}22;color:${c}`}>{tr[`status.${entry.data.status}`]}</span>
+                <h3 class="text-xl font-extrabold">{entry.data.title}</h3>
+                <span class="n-in rounded-full px-3 py-1 text-xs font-bold" style={`color:${c}`}>{tr[`status.${entry.data.status}`]}</span>
               </div>
-              <p class="mt-3 text-zinc-400">{entry.data.tagline}</p>
+              <p class="mt-2 text-[var(--nm)]">{entry.data.tagline}</p>
               <div class="mt-4 flex flex-wrap gap-2">
-                {entry.data.stack.map((s) => <span class="rounded-md bg-white/5 px-2 py-0.5 text-xs text-zinc-400">{s}</span>)}
+                {entry.data.stack.map((s) => <span class="n-out-s rounded-lg px-2.5 py-1 text-xs text-[var(--nm)]">{s}</span>)}
               </div>
-              <div class="mt-5 flex flex-wrap items-center gap-3">
-                <a href={localePath(lang, `/projects/${slug}`)} class="inline-flex items-center gap-1 text-sm font-semibold transition-all after:absolute after:inset-0 after:content-[''] hover:gap-2" style={`color:${c}`}>{tr['projects.more']}</a>
+              <div class="mt-6 flex items-center gap-3">
+                <a href={localePath(lang, `/projects/${slug}`)} class="n-out-s n-press rounded-full px-5 py-2.5 text-sm font-extrabold">{tr['projects.more']}</a>
                 {entry.data.demo && (
-                  <a href={entry.data.demo} target="_blank" rel="noopener" class="relative z-10 ml-auto rounded-xl px-4 py-2 text-sm font-extrabold text-zinc-950 shadow-[0_0_24px_-4px_var(--c)] transition hover:-translate-y-0.5 hover:brightness-110" style={`background:${c}`}>{tr['project.demo']}</a>
+                  <a href={entry.data.demo} target="_blank" rel="noopener" class="n-press ml-auto rounded-full px-5 py-2.5 text-sm font-extrabold text-[#06121a]" style={`background:${c};box-shadow:0 8px 20px ${c}55`}>{tr['project.demo']}</a>
                 )}
               </div>
             </div>
@@ -112,61 +108,44 @@ const serviceIcons = [
     </div>
   </section>
 
-  <!-- STACK MARQUEE -->
-  <section class="py-6" aria-hidden="true">
-    <div class="marquee">
-      <div>
-        {[...stack, ...stack].map((s) => (
-          <span class="whitespace-nowrap chip">{s}</span>
+  <!-- JUNO DEMO -->
+  <section id="demo" class="mx-auto max-w-5xl scroll-mt-20 px-4 pb-16">
+    <div class="n-out reveal rounded-[28px] p-6 sm:p-10">
+      <span class="n-lbl">Juno</span>
+      <h2 class="mt-2 text-2xl font-extrabold sm:text-3xl">{tr['demo.title']}</h2>
+      <p class="mt-2 max-w-xl text-[var(--nm)]">{tr['demo.lead']}</p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        {demoPresets[lang].map((d) => (
+          <a href={`/junoadmin/?demo=1&preset=${d.id}`} target="_blank" rel="noopener" class="n-out-s n-press rounded-full px-4 py-2.5 text-sm font-bold">{d.label}</a>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- JUNO DEMO -->
-  <section id="demo" class="mx-auto max-w-6xl scroll-mt-20 px-4 py-20">
-    <div class="spot reveal relative overflow-hidden rounded-3xl border border-pink-400/25 p-8 sm:p-12" style={`--c:${accentOf('juno')};background:radial-gradient(90% 120% at 100% 0%, #f472b622, transparent 60%), rgba(255,255,255,.03)`}>
-      <div class="grid items-center gap-8 md:grid-cols-[1.3fr_1fr]">
-        <div>
-          <h2 class="text-3xl font-extrabold tracking-tight">{tr['demo.title']}</h2>
-          <p class="mt-3 max-w-xl text-zinc-400">{tr['demo.lead']}</p>
-          <div class="mt-8 flex flex-wrap gap-3">
-            {demoPresets[lang].map((d) => (
-              <a href={`/junoadmin/?demo=1&preset=${d.id}`} target="_blank" rel="noopener" class="rounded-xl border border-white/15 bg-white/5 px-4 py-2.5 text-sm font-medium transition hover:-translate-y-0.5 hover:border-pink-400/60 hover:bg-pink-400/10">{d.label}</a>
-            ))}
-          </div>
-        </div>
-        <ProjectArt slug="juno" color={accentOf('juno')} class="mx-auto hidden w-full max-w-xs md:block" />
-      </div>
-    </div>
-  </section>
-
   <!-- SERVICES -->
-  <section id="services" class="mx-auto max-w-6xl scroll-mt-20 px-4 py-20">
-    <h2 class="sec-title reveal text-[clamp(26px,4.5vw,38px)] font-extrabold leading-tight tracking-[-.5px]">{tr['services.title']}</h2>
-    <div class="mt-10 grid gap-5 sm:grid-cols-3">
+  <section id="services" class="mx-auto max-w-5xl scroll-mt-20 px-4 pb-16">
+    <h2 class="reveal text-[clamp(26px,4.5vw,36px)] font-extrabold tracking-[-.5px]">{tr['services.title']}</h2>
+    <div class="mt-8 grid gap-6 sm:grid-cols-3">
       {services[lang].map((s, i) => (
-        <div class="spot reveal glass rounded-[18px] p-6 transition hover:-translate-y-1 hover:border-white/30" style={`--delay:${i * 120}ms`}>
-          <div class="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-emerald-400/25 to-indigo-400/25 text-emerald-300">
+        <div class="n-out reveal rounded-[24px] p-6" style={`--delay:${i * 100}ms`}>
+          <div class="n-in grid h-14 w-14 place-items-center rounded-[18px] text-[var(--accent)]">
             <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={serviceIcons[i]} />
           </div>
-          <h3 class="mt-5 text-lg font-bold">{s.title}</h3>
-          <p class="mt-2 text-sm text-zinc-400">{s.text}</p>
+          <h3 class="mt-5 text-lg font-extrabold">{s.title}</h3>
+          <p class="mt-2 text-sm text-[var(--nm)]">{s.text}</p>
         </div>
       ))}
     </div>
   </section>
 
   <!-- CONTACT -->
-  <section id="contact" class="mx-auto max-w-6xl scroll-mt-20 px-4 pb-24 pt-8">
-    <div class="reveal relative overflow-hidden rounded-[2rem] p-[1px]" style="background:linear-gradient(120deg,#34d399,#60a5fa,#f472b6,#a78bfa)">
-      <div class="relative rounded-[calc(2rem-1px)] bg-[#0a0d13]/95 p-8 text-center sm:p-14">
-        <h2 class="text-3xl font-extrabold tracking-tight sm:text-5xl">{tr['contact.title']}</h2>
-        <p class="mt-4 text-zinc-400">{tr['contact.sub']}</p>
-        <div class="mt-10 flex flex-wrap justify-center gap-3">
-          <a href={CONTACTS.telegram} target="_blank" rel="noopener" class="btn-primary rounded-[14px] px-6 py-3.5 font-extrabold transition hover:-translate-y-px hover:brightness-110">Telegram</a>
-          <a href={`mailto:${CONTACTS.email}`} class="rounded-xl border border-white/15 bg-white/5 px-6 py-3 font-semibold transition hover:-translate-y-0.5 hover:border-white/30">{CONTACTS.email}</a>
-        </div>
+  <section id="contact" class="mx-auto max-w-5xl scroll-mt-20 px-4 pb-20">
+    <div class="n-in reveal rounded-[28px] p-8 text-center sm:p-12">
+      <h2 class="text-3xl font-extrabold sm:text-4xl">{tr['contact.title']}</h2>
+      <p class="mt-3 text-[var(--nm)]">{tr['contact.sub']}</p>
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
+        <a href={CONTACTS.telegram} target="_blank" rel="noopener" class="n-grad n-press rounded-full px-7 py-3.5 font-extrabold">Telegram</a>
+        <a href={`mailto:${CONTACTS.email}`} class="n-out-s n-press rounded-full px-7 py-3.5 font-extrabold">{CONTACTS.email}</a>
       </div>
     </div>
   </section>

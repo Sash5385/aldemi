@@ -38,30 +38,26 @@ const year = new Date().getFullYear();
     <meta property="og:description" content={desc} />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content={lang === 'uk' ? 'uk_UA' : 'en_US'} />
-    <meta name="theme-color" content="#0a0b0d" />
+    <meta name="theme-color" content="#1e2433" />
     <link rel="preload" href="/fonts/onest-cyrillic-800-normal.woff2" as="font" type="font/woff2" crossorigin />
     <script is:inline>document.documentElement.classList.add("js")</script>
   </head>
-  <body class="min-h-screen text-zinc-100 antialiased">
+  <body class="neo min-h-screen antialiased">
     <div class="bg" aria-hidden="true"><i class="orb o1"></i><i class="orb o2"></i><i class="orb o3"></i></div>
     <div id="fxbar" aria-hidden="true"></div>
-    <header class="sticky top-0 z-20 border-b border-zinc-800/80 bg-[#0a0b0d]/80 backdrop-blur-md">
+    <header class="sticky top-0 z-20 bg-[#1e2433]/90 backdrop-blur-md">
       <nav class="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
-        <a href={home} class="text-lg font-bold tracking-tight">Al<span class="text-emerald-400">Demi</span></a>
-        <div class="flex items-center gap-4 text-sm text-zinc-300">
-          <a href={`${home}#projects`} class="hidden hover:text-emerald-400 sm:inline">{tr['nav.projects']}</a>
-          <a href={`${home}#services`} class="hidden hover:text-emerald-400 sm:inline">{tr['nav.services']}</a>
-          <a href={`${home}#contact`} class="hover:text-emerald-400">{tr['nav.contact']}</a>
-          <a href={localePath(other, path)} hreflang={other} class="rounded-md border border-zinc-700 px-2 py-1 text-xs font-semibold hover:border-emerald-400">
-            {other === 'uk' ? 'UA' : 'EN'}
-          </a>
-        </div>
+        <a href={`${home}#contact`} class="n-out-s n-press grid h-11 w-11 place-items-center rounded-full text-[var(--nm)]" aria-label={tr['nav.contact']}>✉</a>
+        <a href={home} class="text-lg font-extrabold tracking-tight">Al<span class="text-[var(--accent)]">Demi</span></a>
+        <a href={localePath(other, path)} hreflang={other} class="n-out-s n-press grid h-11 w-11 place-items-center rounded-full text-xs font-extrabold text-[var(--nm)]">
+          {other === 'uk' ? 'UA' : 'EN'}
+        </a>
       </nav>
     </header>
     <main>
       <slot />
     </main>
-    <footer class="border-t border-zinc-800 py-8 text-center text-sm text-zinc-500">
+    <footer class="py-8 text-center text-sm text-[var(--nm)]">
       © {year} AlDemi
     </footer>
     <script>

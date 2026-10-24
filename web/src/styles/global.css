@@ -95,3 +95,18 @@ html.js .reveal.in { opacity: 1; transform: none; filter: none; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
   html.js .reveal { opacity: 1; transform: none; filter: none; }
 }
+
+/* ===================== НЕОМОРФІЗМ (варіант 7) ===================== */
+:root { --nb: #1e2433; --nhi: #283044; --nlo: #141824; --nt: #e8eefc; --nm: #8090b0; --accent: #22d3ee; --acc2: #3b82f6; --acc-hi: #22d3ee; }
+html, body.neo { background: var(--nb); }
+body.neo { color: var(--nt); }
+body.neo .bg, body.neo #fxbar { display: none; }
+.n-out { background: var(--nb); box-shadow: 8px 8px 18px var(--nlo), -8px -8px 18px var(--nhi); }
+.n-out-s { background: var(--nb); box-shadow: 4px 4px 9px var(--nlo), -4px -4px 9px var(--nhi); }
+.n-in { background: var(--nb); box-shadow: inset 5px 5px 10px var(--nlo), inset -5px -5px 10px var(--nhi); }
+.n-grad { background: linear-gradient(135deg, var(--acc2), var(--accent)); color: #06121a; box-shadow: 0 10px 24px color-mix(in srgb, var(--accent) 40%, transparent), -6px -6px 14px var(--nhi); }
+.n-lbl { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--nm); }
+.n-press:active { box-shadow: inset 4px 4px 8px var(--nlo), inset -4px -4px 8px var(--nhi); transform: scale(.98); }
+.n-tile { transition: transform .2s, box-shadow .2s; }
+.n-tile:hover { transform: translateY(-2px); }
+.n-tile:active { box-shadow: inset 4px 4px 8px var(--nlo), inset -4px -4px 8px var(--nhi); }

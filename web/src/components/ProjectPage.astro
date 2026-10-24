@@ -18,17 +18,17 @@ const c = accentOf(slug);
     <a href={`${localePath(lang)}#projects`} class="text-sm text-zinc-400 hover:text-emerald-400">{tr['project.back']}</a>
     <div class="mt-6 flex flex-wrap items-center gap-3">
       <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl" style={`color:${c}`}>{entry.data.title}</h1>
-      <span class="rounded-full bg-zinc-800 px-3 py-1 text-xs text-zinc-300">{tr[`status.${entry.data.status}`]}</span>
+      <span class="n-in rounded-full px-3 py-1 text-xs font-bold">{tr[`status.${entry.data.status}`]}</span>
     </div>
     <p class="mt-4 text-lg text-zinc-400">{entry.data.tagline}</p>
-    <div class="mt-8 overflow-hidden rounded-3xl border border-white/10" style={`background:radial-gradient(120% 90% at 50% 0%, ${c}30, transparent 70%), rgba(255,255,255,.03)`}>
+    <div class="n-in mt-8 overflow-hidden rounded-[24px]" >
       <ProjectArt slug={slug} color={c} class="mx-auto h-56 w-full max-w-md p-6" />
     </div>
 
     <div class="mt-6">
       <span class="text-sm text-zinc-500">{tr['project.stack']}:</span>
       <div class="mt-2 flex flex-wrap gap-2">
-        {entry.data.stack.map((s) => <span class="rounded bg-zinc-800 px-2 py-0.5 text-xs text-zinc-300">{s}</span>)}
+        {entry.data.stack.map((s) => <span class="n-out-s rounded-lg px-2.5 py-1 text-xs text-[var(--nm)]">{s}</span>)}
       </div>
     </div>
 
@@ -38,12 +38,12 @@ const c = accentOf(slug);
 
     <div class="mt-12 flex flex-wrap gap-3">
       {entry.data.demo && (
-        <a href={entry.data.demo} target="_blank" rel="noopener" class="rounded-lg px-5 py-3 font-extrabold text-zinc-950 shadow-[0_0_24px_-4px_currentColor] transition hover:-translate-y-0.5" style={`background:${c};color:#07090d`}>{tr['project.demo']}</a>
+        <a href={entry.data.demo} target="_blank" rel="noopener" class="n-press rounded-full px-5 py-3 font-extrabold text-zinc-950 shadow-[0_0_24px_-4px_currentColor] transition hover:-translate-y-0.5" style={`background:${c};color:#07090d`}>{tr['project.demo']}</a>
       )}
       {entry.data.url && (
-        <a href={entry.data.url} target="_blank" rel="noopener" class="rounded-lg border border-zinc-700 px-5 py-3 font-semibold hover:border-emerald-400">{tr['project.visit']} ↗</a>
+        <a href={entry.data.url} target="_blank" rel="noopener" class="n-out-s n-press rounded-full px-5 py-3 font-extrabold">{tr['project.visit']} ↗</a>
       )}
-      <a href={`${localePath(lang)}#contact`} class="rounded-lg px-5 py-3 font-semibold text-zinc-950 transition hover:-translate-y-0.5" style={`background:${c}`}>{tr['project.order']}</a>
+      <a href={`${localePath(lang)}#contact`} class="n-press rounded-full px-5 py-3 font-semibold text-zinc-950 transition hover:-translate-y-0.5" style={`background:${c}`}>{tr['project.order']}</a>
     </div>
   </article>
 </Base>
