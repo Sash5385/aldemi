@@ -40,7 +40,18 @@ const year = new Date().getFullYear();
     <meta property="og:locale" content={lang === 'uk' ? 'uk_UA' : 'en_US'} />
     <meta name="theme-color" content="#1e2433" />
     <link rel="preload" href="/fonts/onest-cyrillic-800-normal.woff2" as="font" type="font/woff2" crossorigin />
-    <script is:inline>document.documentElement.classList.add("js")</script>
+    <script is:inline>
+      document.documentElement.classList.add("js");
+      (function () {
+        try {
+          var q = new URLSearchParams(location.search).get("fx");
+          if (q === "0") sessionStorage.removeItem("fx");
+          else if (q) sessionStorage.setItem("fx", q);
+          var f = sessionStorage.getItem("fx");
+          if (f) document.documentElement.setAttribute("data-fx", f);
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body class="neo min-h-screen antialiased">
     <div class="bg" aria-hidden="true"><i class="orb o1"></i><i class="orb o2"></i><i class="orb o3"></i></div>
@@ -74,6 +85,15 @@ const year = new Date().getFullYear();
         if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
       }), { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
       document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+      const fx = Number(root.dataset.fx || 0);
+      if (fx) {
+        const names = ['', 'Підйом', 'Повільна поява', 'Зліва', 'Зліва / справа', 'Наближення', 'Віддалення', '3D-фліп вгору', '3D-поворот картки', 'Підйом з нахилом', 'Видавлювання (неоморф)', 'З розмиття', 'Шторка знизу', 'Коло', 'Пружина', 'Падіння зверху', 'Розгойдування', 'Скіс', 'Прив’язка до скролу', 'Паралакс секцій', '3D-нахил + стиснення hero'];
+        const go = (n: number) => `${location.pathname}?fx=${((n + 19) % 20) + 1}`;
+        const bar = document.createElement('div');
+        bar.id = 'fxbar-switch';
+        bar.innerHTML = `<a href="${go(fx - 1)}">‹</a><span><b>${fx}</b>/20 · ${names[fx] ?? ''}</span><a href="${go(fx + 1)}">›</a><a href="${location.pathname}?fx=0" title="off">✕</a>`;
+        document.body.appendChild(bar);
+      }
       document.querySelectorAll<HTMLElement>('.spot').forEach((el) => el.addEventListener('pointermove', (ev) => {
         const r = el.getBoundingClientRect();
         el.style.setProperty('--x', `${ev.clientX - r.left}px`);
