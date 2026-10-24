@@ -186,3 +186,6 @@ html[data-fx="37"] .reveal, html[data-fx="38"] .reveal, html[data-fx="39"] .reve
   html[data-fx="39"] .reveal { animation: fxFocus linear both; animation-timeline: view(); }
   html[data-fx="40"] #projects .n-out.reveal { position: sticky; top: 84px; animation: fxStack linear both; animation-timeline: view(); animation-range: exit -20% exit 60%; }
 }
+
+/* Тонка світло-сіра обводка кнопок */
+.n-press, .n-tile { border: 1px solid rgba(214, 218, 226, .55); }
