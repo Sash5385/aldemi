@@ -33,17 +33,16 @@ const serviceIcons = [
 <Base lang={lang}>
   <!-- HERO -->
   <section class="mx-auto max-w-5xl px-4 pt-6">
-    <div class="n-out reveal relative overflow-hidden rounded-[28px] p-6 sm:p-10">
-      <div class="n-in pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full sm:h-80 sm:w-80" aria-hidden="true"></div>
+    <div class="n-out reveal relative overflow-hidden rounded-[28px] p-6 text-center sm:p-12">
+      <div class="n-in pointer-events-none absolute left-1/2 top-1/2 h-[120%] w-[120%] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-40" aria-hidden="true"></div>
       <span class="n-lbl relative">{tr['hero.eyebrow']}</span>
-      <h1 class="relative mt-3 max-w-2xl text-[clamp(30px,6vw,52px)] font-extrabold leading-[1.08] tracking-[-1px]">
-        {tr['hero.t1']}<em class="not-italic text-[var(--accent)]">{tr['hero.em']}</em>{tr['hero.t2']}
+      <h1 class="relative mx-auto mt-4 max-w-3xl text-[clamp(30px,6vw,54px)] font-extrabold leading-[1.1]">
+        {tr['hero.t1']}<em class="not-italic">{tr['hero.em']}</em>{tr['hero.t2']}
       </h1>
-      <p class="relative mt-4 max-w-xl text-[var(--nm)]">{tr['hero.sub']}</p>
-      <div class="relative mt-7 flex items-center gap-4">
-        <a href="#contact" class="n-grad n-press grid h-16 w-16 place-items-center rounded-full text-2xl" aria-label={tr['hero.write']}>✉</a>
-        <a href="#contact" class="font-extrabold">{tr['hero.write']}</a>
-        <a href="#projects" class="n-out-s n-press ml-auto grid h-12 w-12 place-items-center rounded-full text-lg" aria-label={tr['hero.cta2']}>→</a>
+      <p class="relative mx-auto mt-5 max-w-xl text-[var(--nm)]">{tr['hero.sub']}</p>
+      <div class="relative mx-auto mt-8 grid max-w-xl grid-cols-2 gap-4">
+        <a href="#contact" class="n-grad n-press btn-lg">{tr['hero.write']}</a>
+        <a href="#projects" class="n-out-s n-press btn-lg">{tr['hero.cta2']}</a>
       </div>
     </div>
   </section>
@@ -55,7 +54,7 @@ const serviceIcons = [
         const c = accentOf(slug);
         return (
           <a href={localePath(lang, `/projects/${slug}`)} class="reveal text-center" style={`--delay:${i * 80}ms`}>
-            <span class="n-out-s n-tile mx-auto grid aspect-square w-full max-w-[84px] place-items-center rounded-[22px] text-sm font-extrabold" style={`color:${c}`}>{ABBR[slug] ?? entry.data.title.slice(0, 2).toUpperCase()}</span>
+            <span class="n-out-s n-tile grid aspect-square w-full place-items-center rounded-[22px] text-sm font-extrabold" style={`color:${c}`}>{ABBR[slug] ?? entry.data.title.slice(0, 2).toUpperCase()}</span>
             <span class="mt-2 block truncate text-xs text-[var(--nm)]">{entry.data.title}</span>
           </a>
         );
@@ -77,28 +76,26 @@ const serviceIcons = [
 
   <!-- PROJECTS -->
   <section id="projects" class="mx-auto max-w-5xl scroll-mt-20 px-4 py-16">
-    <h2 class="reveal text-[clamp(26px,4.5vw,36px)] font-extrabold tracking-[-.5px]">{tr['projects.title']}</h2>
+    <h2 class="reveal text-center text-[clamp(26px,4.5vw,38px)] font-extrabold">{tr['projects.title']}</h2>
     <div class="mt-8 grid gap-6 sm:grid-cols-2">
       {projects.map(({ entry, slug }, i) => {
         const c = accentOf(slug);
         return (
-          <div class="n-out reveal relative overflow-hidden rounded-[24px]" style={`--delay:${(i % 2) * 100}ms`}>
+          <div class="n-out reveal relative flex flex-col overflow-hidden rounded-[24px] text-center" style={`--delay:${(i % 2) * 100}ms`}>
             <div class="n-in m-4 rounded-[18px]">
               <ProjectArt slug={slug} color={c} class="mx-auto h-40 w-full p-4" />
             </div>
-            <div class="px-6 pb-6">
-              <div class="flex items-center justify-between gap-3">
-                <h3 class="text-xl font-extrabold">{entry.data.title}</h3>
-                <span class="n-in rounded-full px-3 py-1 text-xs font-bold" style={`color:${c}`}>{tr[`status.${entry.data.status}`]}</span>
-              </div>
-              <p class="mt-2 text-[var(--nm)]">{entry.data.tagline}</p>
-              <div class="mt-4 flex flex-wrap gap-2">
+            <div class="flex flex-1 flex-col items-center px-6 pb-6">
+              <h3 class="text-2xl font-extrabold">{entry.data.title}</h3>
+              <span class="n-in mt-3 rounded-full px-4 py-1 text-xs font-bold" style={`color:${c}`}>{tr[`status.${entry.data.status}`]}</span>
+              <p class="mt-4 text-[var(--nm)]">{entry.data.tagline}</p>
+              <div class="mt-4 flex flex-wrap justify-center gap-2">
                 {entry.data.stack.map((s) => <span class="n-out-s rounded-lg px-2.5 py-1 text-xs text-[var(--nm)]">{s}</span>)}
               </div>
-              <div class="mt-6 flex items-center gap-3">
-                <a href={localePath(lang, `/projects/${slug}`)} class="n-out-s n-press inline-flex min-h-[80px] items-center justify-center rounded-full px-7 text-sm font-extrabold">{tr['projects.more']}</a>
+              <div class={`mt-auto grid w-full gap-4 pt-6 ${entry.data.demo ? 'grid-cols-2' : 'grid-cols-1'}`}>
+                <a href={localePath(lang, `/projects/${slug}`)} class="n-out-s n-press btn-lg">{tr['projects.more']}</a>
                 {entry.data.demo && (
-                  <a href={entry.data.demo} target="_blank" rel="noopener" class="n-press ml-auto inline-flex min-h-[80px] items-center justify-center rounded-full px-7 text-sm font-extrabold text-[#06121a]" style={`background:${c};box-shadow:0 8px 20px ${c}55`}>{tr['project.demo']}</a>
+                  <a href={entry.data.demo} target="_blank" rel="noopener" class="n-press btn-lg text-[#06121a]" style={`background:${c};box-shadow:0 8px 20px ${c}55`}>{tr['project.demo']}</a>
                 )}
               </div>
             </div>
@@ -110,13 +107,13 @@ const serviceIcons = [
 
   <!-- JUNO DEMO -->
   <section id="demo" class="mx-auto max-w-5xl scroll-mt-20 px-4 pb-16">
-    <div class="n-out reveal rounded-[28px] p-6 sm:p-10">
+    <div class="n-out reveal rounded-[28px] p-6 text-center sm:p-10">
       <span class="n-lbl">Juno</span>
-      <h2 class="mt-2 text-2xl font-extrabold sm:text-3xl">{tr['demo.title']}</h2>
-      <p class="mt-2 max-w-xl text-[var(--nm)]">{tr['demo.lead']}</p>
-      <div class="mt-6 flex flex-wrap gap-3">
-        {demoPresets[lang].map((d) => (
-          <a href={`/junoadmin/?demo=1&preset=${d.id}`} target="_blank" rel="noopener" class="n-out-s n-press inline-flex min-h-[80px] items-center justify-center rounded-full px-6 text-sm font-bold">{d.label}</a>
+      <h2 class="mt-3 text-2xl font-extrabold sm:text-3xl">{tr['demo.title']}</h2>
+      <p class="mx-auto mt-3 max-w-xl text-[var(--nm)]">{tr['demo.lead']}</p>
+      <div class="mx-auto mt-8 grid max-w-xl grid-cols-2 gap-4">
+        {demoPresets[lang].map((d, i) => (
+          <a href={`/junoadmin/?demo=1&preset=${d.id}`} target="_blank" rel="noopener" class={`n-out-s n-press btn-lg ${i === demoPresets[lang].length - 1 && demoPresets[lang].length % 2 ? 'col-span-2' : ''}`}>{d.label}</a>
         ))}
       </div>
     </div>
@@ -124,10 +121,10 @@ const serviceIcons = [
 
   <!-- SERVICES -->
   <section id="services" class="mx-auto max-w-5xl scroll-mt-20 px-4 pb-16">
-    <h2 class="reveal text-[clamp(26px,4.5vw,36px)] font-extrabold tracking-[-.5px]">{tr['services.title']}</h2>
+    <h2 class="reveal text-center text-[clamp(26px,4.5vw,38px)] font-extrabold">{tr['services.title']}</h2>
     <div class="mt-8 grid gap-6 sm:grid-cols-3">
       {services[lang].map((s, i) => (
-        <div class="n-out reveal rounded-[24px] p-6" style={`--delay:${i * 100}ms`}>
+        <div class="n-out reveal flex flex-col items-center rounded-[24px] p-6 text-center" style={`--delay:${i * 100}ms`}>
           <div class="n-in grid h-14 w-14 place-items-center rounded-[18px] text-[var(--accent)]">
             <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={serviceIcons[i]} />
           </div>
@@ -140,12 +137,12 @@ const serviceIcons = [
 
   <!-- CONTACT -->
   <section id="contact" class="mx-auto max-w-5xl scroll-mt-20 px-4 pb-20">
-    <div class="n-in reveal rounded-[28px] p-8 text-center sm:p-12">
+    <div class="n-in reveal rounded-[28px] p-6 text-center sm:p-12">
       <h2 class="text-3xl font-extrabold sm:text-4xl">{tr['contact.title']}</h2>
       <p class="mt-3 text-[var(--nm)]">{tr['contact.sub']}</p>
-      <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
-        <a href={CONTACTS.telegram} target="_blank" rel="noopener" class="n-grad n-press inline-flex min-h-[104px] items-center justify-center rounded-full px-9 font-extrabold">Telegram</a>
-        <a href={`mailto:${CONTACTS.email}`} class="n-out-s n-press inline-flex min-h-[104px] items-center justify-center rounded-full px-9 font-extrabold">{CONTACTS.email}</a>
+      <div class="mx-auto mt-8 grid max-w-xl gap-4 sm:grid-cols-2">
+        <a href={CONTACTS.telegram} target="_blank" rel="noopener" class="n-grad n-press btn-lg">Telegram</a>
+        <a href={`mailto:${CONTACTS.email}`} class="n-out-s n-press btn-lg break-all">{CONTACTS.email}</a>
       </div>
     </div>
   </section>
