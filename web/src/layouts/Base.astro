@@ -87,11 +87,11 @@ const year = new Date().getFullYear();
       document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
       const fx = Number(root.dataset.fx || 0);
       if (fx) {
-        const names = ['', 'Підйом', 'Повільна поява', 'Зліва', 'Зліва / справа', 'Наближення', 'Віддалення', '3D-фліп вгору', '3D-поворот картки', 'Підйом з нахилом', 'Видавлювання (неоморф)', 'З розмиття', 'Шторка знизу', 'Коло', 'Пружина', 'Падіння зверху', 'Розгойдування', 'Скіс', 'Прив’язка до скролу', 'Паралакс секцій', '3D-нахил + стиснення hero'];
-        const go = (n: number) => `${location.pathname}?fx=${((n + 19) % 20) + 1}`;
+        const names = ['', 'Підйом', 'Повільна поява', 'Зліва', 'Зліва / справа', 'Наближення', 'Віддалення', '3D-фліп вгору', '3D-поворот картки', 'Підйом з нахилом', 'Видавлювання (неоморф)', 'З розмиття', 'Шторка знизу', 'Коло', 'Пружина', 'Падіння зверху', 'Розгойдування', 'Скіс', 'Прив’язка до скролу', 'Паралакс секцій', '3D-нахил + стиснення hero', '3D-падіння згори', 'З глибини', 'Поп', 'Розгортання вбік', 'Розгортання вниз', 'Переворот 180°', 'Глітч', 'Шторка зліва', 'Діагональ', 'Спалах', 'Пружина справа', 'З ч/б у колір', 'З кута', 'Сплющення', 'Сходинки', 'Вдавлене → випукле', 'Виїзд при скролі', '3D-карусель', 'Фокус у центрі', 'Стопка карток'];
+        const go = (n: number) => `${location.pathname}?fx=${((n + 39) % 40) + 1}`;
         const bar = document.createElement('div');
         bar.id = 'fxbar-switch';
-        bar.innerHTML = `<a href="${go(fx - 1)}">‹</a><span><b>${fx}</b>/20 · ${names[fx] ?? ''}</span><a href="${go(fx + 1)}">›</a><a href="${location.pathname}?fx=0" title="off">✕</a>`;
+        bar.innerHTML = `<a href="${go(fx - 1)}">‹</a><span><b>${fx}</b>/40 · ${names[fx] ?? ''}</span><a href="${go(fx + 1)}">›</a><a href="${location.pathname}?fx=0" title="off">✕</a>`;
         document.body.appendChild(bar);
       }
       document.querySelectorAll<HTMLElement>('.spot').forEach((el) => el.addEventListener('pointermove', (ev) => {
