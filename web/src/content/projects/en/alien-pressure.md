@@ -1,6 +1,6 @@
 ---
 title: Alien Pressure
-tagline: Tactical 3D game: a squad of humans vs aliens. Cover, overwatch, morale.
+tagline: "Tactical 3D game: a squad of humans vs aliens. Cover, overwatch, morale."
 status: dev
 stack: [Three.js, React, TypeScript]
 demo: /alien-pressure/

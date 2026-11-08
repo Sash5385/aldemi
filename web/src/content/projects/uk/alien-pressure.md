@@ -1,6 +1,6 @@
 ---
 title: Alien Pressure
-tagline: Тактична 3D-гра: загін землян проти прибульців. Укриття, overwatch, мораль.
+tagline: "Тактична 3D-гра: загін землян проти прибульців. Укриття, overwatch, мораль."
 status: dev
 stack: [Three.js, React, TypeScript]
 demo: /alien-pressure/
