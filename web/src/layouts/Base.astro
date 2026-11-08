@@ -48,6 +48,11 @@ const year = new Date().getFullYear();
           if (q === "0") sessionStorage.removeItem("fx");
           else if (q) sessionStorage.setItem("fx", q);
           var f = sessionStorage.getItem("fx");
+          var lq = new URLSearchParams(location.search).get("look");
+          if (lq === "0") sessionStorage.removeItem("look");
+          else if (lq) sessionStorage.setItem("look", lq);
+          var lk = sessionStorage.getItem("look");
+          if (lk) document.documentElement.setAttribute("data-look", lk);
           document.documentElement.setAttribute("data-fx", f || "23");
           if (f) document.documentElement.setAttribute("data-fx-preview", "1");
         } catch (e) {}
