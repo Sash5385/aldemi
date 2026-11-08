@@ -119,7 +119,7 @@ body.neo .bg, body.neo #fxbar { display: none; }
 html { background: var(--nb); }
 body.neo { background: transparent; }
 body.neo::before { content: ""; position: fixed; inset: -6%; z-index: -2; pointer-events: none;
-  background: linear-gradient(rgba(6,16,10,.45), rgba(6,16,10,.55)), #0b2a16 url(/img/leaves-bg.webp) center/cover no-repeat; filter: blur(18px) saturate(1.1); }
+  background: linear-gradient(rgba(6,16,10,.45), rgba(6,16,10,.55)), #0b2a16 url(/img/leaves-bg.webp) center/cover no-repeat; filter: blur(9px) saturate(1.1); }
 body.neo::after { display: none; }
 @media (max-width: 640px) { body.neo::after { filter: blur(12px); background-size: 900px 580px; } }
 .n-out, .n-out-s, .n-tile { background: rgba(255,255,255,.035); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,.06); }
