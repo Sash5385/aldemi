@@ -14,7 +14,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  JUNO_REF: ccr-0afc4178-9t5dvx
+  JUNO_REF: main
 
 jobs:
   deploy:
